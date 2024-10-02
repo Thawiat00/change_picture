@@ -64,4 +64,6 @@ if state change ,image will change too
         void DisplayImage(); // Function to display the image
         void OnNext();       // Function to go to the next image
     }
+
+
 }
