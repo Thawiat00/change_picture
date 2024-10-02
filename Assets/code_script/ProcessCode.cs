@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ProcessCode : MonoBehaviour, IProcessCodeDebug
 {
@@ -12,7 +13,7 @@ public class ProcessCode : MonoBehaviour, IProcessCodeDebug
     // Interface for managing image states
     private IImageState currentState;
     public bool debugMode = false; // Variable to toggle debug mode
-    public Text debugText; // UI Text for showing debug information
+    public TextMeshProUGUI debugText; // UI Text for showing debug information
 
     void Start()
     {
