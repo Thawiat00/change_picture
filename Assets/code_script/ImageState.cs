@@ -18,7 +18,7 @@ public class ImageState : IImageState
     {
         if (controller.images.Length > 0) // Check if there are any images to display
         {
-            controller.imageDisplay.sprite = controller.images[currentIndex];
+            controller.imagePerson.sprite = controller.images[currentIndex];
 
             // Check if debug mode is enabled in ProcessCode
             if (controller.debugMode)

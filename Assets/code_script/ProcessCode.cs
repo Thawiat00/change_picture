@@ -7,7 +7,8 @@ using TMPro;
 public class ProcessCode : MonoBehaviour, IProcessCodeDebug
 {
     // Variable to hold the image display
-    public Image imageDisplay;
+    public Image imagePerson;
+    public Image imageBG;
     public Sprite[] images; // Array to store images 1 to 4
 
     // Interface for managing image states
