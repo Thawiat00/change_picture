@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static DebugManager;
 
-public class ProcessCode : MonoBehaviour
+public class ProcessCode : MonoBehaviour, IProcessCodeDebug
 {
     /*
      
@@ -31,6 +32,8 @@ if state change ,image will change too
 
     // Interface for managing image states
     private IImageState currentState;
+    private bool debugMode = false; // Variable to toggle debug mode
+    public Text debugText; // UI Text for showing debug information
 
     void Start()
     {
@@ -58,12 +61,24 @@ if state change ,image will change too
         currentState.OnNext(); // Call OnNext of the current state to switch images
     }
 
-    // Interface for state management
-    public interface IImageState
+
+
+    // Implement the interface to return the current image index for debugging
+    // Implement the interface to return the current image index for debugging
+    public int GetCurrentImageIndex()
     {
-        void DisplayImage(); // Function to display the image
-        void OnNext();       // Function to go to the next image
+        ImageState state = (ImageState)currentState;
+        return state.GetCurrentIndex();
     }
 
-
+   
 }
+
+
+// Interface for state management
+public interface IImageState
+{
+    void DisplayImage(); // Function to display the image
+    void OnNext();       // Function to go to the next image
+}
+

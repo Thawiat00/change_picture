@@ -27,6 +27,11 @@ public class ImageState : IImageState
         int nextIndex = (currentIndex + 1) % controller.images.Length;
         controller.SetState(new ImageState(controller, nextIndex));
     }
+
+    public int GetCurrentIndex()
+    {
+        return currentIndex;
+    }
 }
 
 
