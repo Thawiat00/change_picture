@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputHandler : MonoBehaviour
@@ -9,10 +7,31 @@ public class InputHandler : MonoBehaviour
     void Update()
     {
         // Check if the spacebar or left mouse button is pressed
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            // Call the OnClickChangeImage function from ProcessCode
-            processCode.OnClickChangeImage();
+            // Check if processCode is not null before calling the method
+            if (processCode != null)
+            {
+                // Call the OnClickChangeImage function from ProcessCode
+                processCode.OnClickChangeImage();
+            }
+            else
+            {
+                Debug.LogWarning("ProcessCode reference is not set.");
+            }
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            // Check if processCode is not null before calling the method
+            if (processCode != null)
+            {
+                // Call the OnClickChangeImage function from ProcessCode
+                processCode.OnClickChangeImage();
+            }
+            else
+            {
+                Debug.LogWarning("ProcessCode reference is not set.");
+            }
         }
     }
 }

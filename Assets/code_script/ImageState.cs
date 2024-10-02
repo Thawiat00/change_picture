@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ProcessCode;
 
 public class ImageState : IImageState
 {
@@ -17,15 +16,29 @@ public class ImageState : IImageState
     // Function to display the image
     public void DisplayImage()
     {
-        controller.imageDisplay.sprite = controller.images[currentIndex];
+        if (controller.images.Length > 0) // Check if there are any images to display
+        {
+            controller.imageDisplay.sprite = controller.images[currentIndex];
+        }
+        else // If there are no images, log a warning
+        {
+            Debug.LogWarning("No images available to display.");
+        }
     }
 
     // Function to switch to the next image
     public void OnNext()
     {
-        // Loop through images 1 to 4
-        int nextIndex = (currentIndex + 1) % controller.images.Length;
-        controller.SetState(new ImageState(controller, nextIndex));
+        if (controller.images.Length > 0) // Check if there are any images to switch
+        {
+            // Loop through images 1 to 4
+            int nextIndex = (currentIndex + 1) % controller.images.Length;
+            controller.SetState(new ImageState(controller, nextIndex));
+        }
+        else // If there are no images, log a warning
+        {
+            Debug.LogWarning("No images available to switch to.");
+        }
     }
 
     public int GetCurrentIndex()
@@ -33,5 +46,3 @@ public class ImageState : IImageState
         return currentIndex;
     }
 }
-
-

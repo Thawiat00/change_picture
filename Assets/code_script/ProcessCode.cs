@@ -6,26 +6,6 @@ using static DebugManager;
 
 public class ProcessCode : MonoBehaviour, IProcessCodeDebug
 {
-    /*
-     
-
-    change image only
-     */
-
-
-    /*
-    find design pattern
-    
-    */
-
-    /*
-    use State Pattern:
-
-make status state (State1, State2, State3, State4)
-in state will show image different
-if state change ,image will change too
-    */
-
     // Variable to hold the image display
     public Image imageDisplay;
     public Sprite[] images; // Array to store images 1 to 4
@@ -51,29 +31,44 @@ if state change ,image will change too
     // Function to change the current state
     public void SetState(IImageState newState)
     {
-        currentState = newState;
-        currentState.DisplayImage(); // Display the image when the state changes
+        if (newState != null) // Check if newState is not null
+        {
+            currentState = newState;
+            currentState.DisplayImage(); // Display the image when the state changes
+        }
+        else
+        {
+            Debug.LogWarning("New state is null, cannot set state.");
+        }
     }
 
     // Function to call when clicking to change the image
     public void OnClickChangeImage()
     {
-        currentState.OnNext(); // Call OnNext of the current state to switch images
+        if (currentState != null) // Check if currentState is not null
+        {
+            currentState.OnNext(); // Call OnNext of the current state to switch images
+        }
+        else
+        {
+            Debug.LogWarning("Current state is null, cannot change image.");
+        }
     }
 
-
-
-    // Implement the interface to return the current image index for debugging
     // Implement the interface to return the current image index for debugging
     public int GetCurrentImageIndex()
     {
-        ImageState state = (ImageState)currentState;
-        return state.GetCurrentIndex();
+        if (currentState is ImageState state) // Check if currentState is of type ImageState
+        {
+            return state.GetCurrentIndex();
+        }
+        else
+        {
+            Debug.LogWarning("Current state is not of type ImageState, returning -1.");
+            return -1; // Return -1 if currentState is not an ImageState
+        }
     }
-
-   
 }
-
 
 // Interface for state management
 public interface IImageState
@@ -81,4 +76,3 @@ public interface IImageState
     void DisplayImage(); // Function to display the image
     void OnNext();       // Function to go to the next image
 }
-
