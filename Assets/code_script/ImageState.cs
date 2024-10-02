@@ -19,6 +19,12 @@ public class ImageState : IImageState
         if (controller.images.Length > 0) // Check if there are any images to display
         {
             controller.imageDisplay.sprite = controller.images[currentIndex];
+
+            // Check if debug mode is enabled in ProcessCode
+            if (controller.debugMode)
+            {
+                Debug.Log($"Current Image Index: {currentIndex + 1}, Image Name: {controller.images[currentIndex].name}");
+            }
         }
         else // If there are no images, log a warning
         {
@@ -31,9 +37,15 @@ public class ImageState : IImageState
     {
         if (controller.images.Length > 0) // Check if there are any images to switch
         {
-            // Loop through images 1 to 4
+            // Loop through images
             int nextIndex = (currentIndex + 1) % controller.images.Length;
             controller.SetState(new ImageState(controller, nextIndex));
+
+            // Check if debug mode is enabled in ProcessCode
+            if (controller.debugMode)
+            {
+                Debug.Log($"Switched to Image Index: {nextIndex + 1}, Image Name: {controller.images[nextIndex].name}");
+            }
         }
         else // If there are no images, log a warning
         {
