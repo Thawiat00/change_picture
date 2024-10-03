@@ -1090,6 +1090,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: {fileID: 1408697038}
+  Image_BG: {fileID: 368118919}
 --- !u!1 &1408697036
 GameObject:
   m_ObjectHideFlags: 0
