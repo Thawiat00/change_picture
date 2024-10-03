@@ -1,29 +1,30 @@
 {
-    "state1": {
-        "girl_talk": [
-            "yea",
-            "Hello",
-            "[waiting_untill(boy_talk)]",
-            "[continue boy_talk]",
-            "OK",
-            "look like that!",
-            "[END]"
-        ],
-        "boy_talk": [
-            "(Boy):You are my angel",
-            "(BOY):wow i'm can talk to you ,it's very nice",
-            "[waiting_untill(girl_talk)]"
-        ],
-        "bg_img": "Outside_1",
-        "transparent_img": "transparent_image_path"
-    },
-    "state2": {
-        "girl_talk": [
-            "another talk",
-            "something else",
-            "different_background_image_path"
-        ],
-        "bg_img": "different_background_image_path",
-        "transparent_img": "different_transparent_image_path"
-    }
+    "states": [
+        {
+            "girl_talk": [
+                "yea",
+                "Hello",
+                "[waiting_untill(boy_talk)]"
+            ],
+            "boy_talk": [
+                "(boy)wow i'm can talk with you",
+                "(boy)I'm fine, thanks!",
+                "[waiting_untill(girl_talk)]"
+            ],
+            "bg_img": "Outside_1",
+            "transparent_img": "transparent_image_path"
+        },
+        {
+            "girl_talk": [
+                "What's your name?",
+                "[waiting_untill(boy_talk)]"
+            ],
+            "boy_talk": [
+                "My name is John",
+                "[waiting_untill(girl_talk)]"
+            ],
+            "bg_img": "Inside_1",
+            "transparent_img": "another_transparent_image_path"
+        }
+    ]
 }
