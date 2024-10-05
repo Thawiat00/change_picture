@@ -1091,6 +1091,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogText: {fileID: 1408697038}
   Image_BG: {fileID: 368118919}
+  isDataModified: 1
+  girlTalks: []
+  boyTalks: []
+  backgroundImg: 
 --- !u!1 &1408697036
 GameObject:
   m_ObjectHideFlags: 0

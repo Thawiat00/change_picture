@@ -1,7 +1,10 @@
+
+
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.IO;
 
 public class DialogManager : MonoBehaviour
 {
@@ -11,6 +14,12 @@ public class DialogManager : MonoBehaviour
     private IDialogState currentState;
     public StateData CurrentStateData { get; private set; }
     private int currentStateIndex = 0;
+    public bool isDataModified = false;  // dynamic flag to check if data is modified
+
+    // ???????????????????????????????? Inspector
+    [Header("Add New Dialog")]
+    public string newGirlTalk;  // ???????????????????????
+    public string newBoyTalk;   // ???????????????????????
 
     void Start()
     {
@@ -38,6 +47,50 @@ public class DialogManager : MonoBehaviour
         else
         {
             Debug.LogError("dialog.json not found in Resources.");
+        }
+    }
+
+    // ????????????? dialog ??????? Inspector
+    public void AddNewDialogFromInspector()
+    {
+        if (!string.IsNullOrEmpty(newGirlTalk) && !string.IsNullOrEmpty(newBoyTalk))
+        {
+            // ???????????????????? CurrentStateData
+            List<string> updatedGirlTalk = new List<string>(CurrentStateData.girl_talk);
+            List<string> updatedBoyTalk = new List<string>(CurrentStateData.boy_talk);
+            updatedGirlTalk.Add(newGirlTalk);
+            updatedBoyTalk.Add(newBoyTalk);
+
+            // ?????? CurrentStateData
+            CurrentStateData.girl_talk = updatedGirlTalk.ToArray();
+            CurrentStateData.boy_talk = updatedBoyTalk.ToArray();
+
+            // ?????????????????????????????????????????
+            isDataModified = true;
+
+            // ?????????????? JSON
+            SaveDialogData();
+            Debug.Log("New dialog added successfully.");
+        }
+        else
+        {
+            Debug.LogWarning("New dialog talks cannot be empty.");
+        }
+    }
+
+    // Save updated data to JSON
+    public void SaveDialogData()
+    {
+        if (isDataModified)
+        {
+            string json = JsonUtility.ToJson(dialogData, true);
+            File.WriteAllText(Path.Combine(Application.dataPath, "Resources/dialog.json"), json);
+            Debug.Log("Dialog data saved.");
+            isDataModified = false;  // Reset the modified flag
+        }
+        else
+        {
+            Debug.Log("No changes to save.");
         }
     }
 
@@ -82,23 +135,30 @@ public class DialogManager : MonoBehaviour
         if (Image_BG != null)
         {
             string bgImagePath = CurrentStateData.bg_img;
-            if (bgImagePath == "Outside_1")
+            Sprite bgSprite = Resources.Load<Sprite>(bgImagePath);
+            if (bgSprite != null)
             {
-                Sprite bgSprite = Resources.Load<Sprite>("Outside_1");
-                if (bgSprite != null)
-                {
-                    Image_BG.sprite = bgSprite;
-                }
-                else
-                {
-                    Debug.LogError("Failed to load background image: Outside_1");
-                }
+                Image_BG.sprite = bgSprite;
             }
             else
             {
+                Debug.LogError($"Failed to load background image: {bgImagePath}");
                 Sprite defaultBgSprite = Resources.Load<Sprite>("DefaultBackground");
-                Image_BG.sprite = defaultBgSprite;
+                Image_BG.sprite = defaultBgSprite; // Load default background if not found
             }
+        }
+    }
+
+    public void ModifyDataCheck()
+    {
+        // Example usage of dynamic data
+        if (dialogData.dynamic_data.isModified)
+        {
+            Debug.Log("Data has been modified by " + dialogData.dynamic_data.lastModifiedBy);
+        }
+        else
+        {
+            Debug.Log("No modifications detected.");
         }
     }
 }
@@ -106,7 +166,15 @@ public class DialogManager : MonoBehaviour
 [System.Serializable]
 public class DialogData
 {
-    public List<StateData> states;
+    public List<StateData> states = new List<StateData>();
+    public DynamicData dynamic_data = new DynamicData();  // added to store dynamic information
+}
+
+[System.Serializable]
+public class DynamicData
+{
+    public bool isModified;
+    public string lastModifiedBy;
 }
 
 [System.Serializable]
@@ -118,9 +186,10 @@ public class StateData
     public string transparent_img;
 }
 
-
 public interface IDialogState
 {
     void DisplayMessage(DialogManager manager);
     void NextMessage(DialogManager manager);
 }
+
+
