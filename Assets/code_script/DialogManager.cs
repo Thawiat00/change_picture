@@ -51,24 +51,37 @@ public class DialogManager : MonoBehaviour
     }
 
     // ????????????? dialog ??????? Inspector
+
+    // Save updated data to JSON
     public void AddNewDialogFromInspector()
     {
-        if (!string.IsNullOrEmpty(newGirlTalk) && !string.IsNullOrEmpty(newBoyTalk))
+        // Check if either girl talk or boy talk is provided
+        if (!string.IsNullOrEmpty(newGirlTalk) || !string.IsNullOrEmpty(newBoyTalk))
         {
-            // ???????????????????? CurrentStateData
+            // Create updated lists for girl talk and boy talk
             List<string> updatedGirlTalk = new List<string>(CurrentStateData.girl_talk);
             List<string> updatedBoyTalk = new List<string>(CurrentStateData.boy_talk);
-            updatedGirlTalk.Add(newGirlTalk);
-            updatedBoyTalk.Add(newBoyTalk);
 
-            // ?????? CurrentStateData
+            // Add new girl talk if provided
+            if (!string.IsNullOrEmpty(newGirlTalk))
+            {
+                updatedGirlTalk.Add(newGirlTalk);
+            }
+
+            // Add new boy talk if provided
+            if (!string.IsNullOrEmpty(newBoyTalk))
+            {
+                updatedBoyTalk.Add(newBoyTalk);
+            }
+
+            // Update CurrentStateData
             CurrentStateData.girl_talk = updatedGirlTalk.ToArray();
             CurrentStateData.boy_talk = updatedBoyTalk.ToArray();
 
-            // ?????????????????????????????????????????
+            // Set modified flag
             isDataModified = true;
 
-            // ?????????????? JSON
+            // Save updated dialog data to JSON
             SaveDialogData();
             Debug.Log("New dialog added successfully.");
         }
@@ -77,6 +90,8 @@ public class DialogManager : MonoBehaviour
             Debug.LogWarning("New dialog talks cannot be empty.");
         }
     }
+
+
 
     // Save updated data to JSON
     public void SaveDialogData()
