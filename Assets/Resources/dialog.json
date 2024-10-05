@@ -4,12 +4,14 @@
             "girl_talk": [
                 "yea",
                 "Hello",
-                "[waiting_untill(boy_talk)]"
+                "[waiting_untill(boy_talk)]",
+                "(girl): it's new text "
             ],
             "boy_talk": [
                 "(boy)wow i'm can talk with you",
                 "(boy)I'm fine, thanks!",
-                "[waiting_untill(girl_talk)]"
+                "[waiting_untill(girl_talk)]",
+                "(boy):it's new text"
             ],
             "bg_img": "Outside_1",
             "transparent_img": "transparent_image_path"
@@ -26,5 +28,9 @@
             "bg_img": "Inside_1",
             "transparent_img": "another_transparent_image_path"
         }
-    ]
+    ],
+    "dynamic_data": {
+        "isModified": false,
+        "lastModifiedBy": ""
+    }
 }
