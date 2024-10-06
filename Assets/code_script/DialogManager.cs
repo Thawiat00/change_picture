@@ -37,6 +37,11 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    public void SetCurrentStateData(StateData newStateData)
+    {
+        CurrentStateData = newStateData;
+    }
+
     void LoadDialogData()
     {
         TextAsset jsonText = Resources.Load<TextAsset>("dialog");
