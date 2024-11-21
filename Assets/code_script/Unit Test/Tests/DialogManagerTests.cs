@@ -1,0 +1,71 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
+using TMPro;
+using UnityEngine.UI;
+
+
+public class DialogManagerTests
+{
+    private DialogManager dialogManager;
+
+    [SetUp]
+    public void SetUp()
+    {
+        // ????? GameObject ??? Attach Script
+        GameObject gameObject = new GameObject();
+        dialogManager = gameObject.AddComponent<DialogManager>();
+
+        // ????? TextMeshProUGUI ??? Image ???????????
+        var dialogTextObject = new GameObject("DialogText").AddComponent<TextMeshProUGUI>();
+        var imageObject = new GameObject("BackgroundImage").AddComponent<Image>();
+
+        dialogManager.dialogText = dialogTextObject;
+        dialogManager.Image_BG = imageObject;
+    }
+
+    [Test]
+    public void TestDialogManagerInitialization()
+    {
+        // ???????? DialogManager ?????????????????????????????????
+        Assert.IsNotNull(dialogManager);
+    }
+
+    [Test]
+    public void AddNewDialogFromInspector_ValidInput_DataUpdated()
+    {
+        // ????????????????
+        StateData stateData = new StateData
+        {
+            girl_talk = new string[] { "Hi" },
+            boy_talk = new string[] { "Hello" }
+        };
+
+        // ????????????????????????????????????? CurrentStateData
+        dialogManager.SetCurrentStateData(stateData);
+
+        // ??????????????????
+        dialogManager.newGirlTalk = "How are you?";
+        dialogManager.newBoyTalk = "I am fine.";
+
+        // ??????????????????????????????????
+        dialogManager.AddNewDialogFromInspector();
+
+        // ?????????????????????????????
+        Assert.Contains("How are you?", dialogManager.CurrentStateData.girl_talk);
+        Assert.Contains("I am fine.", dialogManager.CurrentStateData.boy_talk);
+    }
+
+
+
+    [UnityTest]
+    public IEnumerator DialogManagerTestsWithEnumeratorPasses()
+    {
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+    }
+}
